@@ -1,14 +1,22 @@
 <script setup>
+  import { ref } from 'vue';
+  import { appService } from '../../core/appService';
   import PaymentEditableField from '../functional/PaymentEditableField.vue';
   
   defineProps({
-      isReadonly: Boolean,
-      bill: Object
-  })
+      isReadonly: Boolean
+  });
+
+  const bill = ref(null);
+  appService.getWaterBill().then(v => bill.value = v);
+
+  defineExpose({
+    bill: Object
+  });
 </script>
 
 <template>
-  <div class="bill">
+  <div class="bill" v-if="bill">
     <i class="fa-solid fa-droplet"></i>
     <h3>Water</h3>
     <PaymentEditableField

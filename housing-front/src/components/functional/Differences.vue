@@ -47,6 +47,6 @@
   }
 
   .field__diff--dec {
-    color: green;
+    color: $green-color;
   }
 </style>

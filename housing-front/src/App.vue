@@ -3,21 +3,6 @@
   import Payments from './components/Payments.vue';
   import Summary from './components/Summary.vue';
   import Toolbar from './components/Toolbar.vue';
-  
-  const summary = {
-    total: {
-      value: 16740.00,
-      diff: 250.00
-    },
-    rent: {
-      value: 13000.00,
-      diff: 0.0
-    },
-    paymentsOnly: {
-      value: 3470.00,
-      diff: -250.0
-    }
-  };
 
   const isReadonly = ref(false);
 
@@ -28,12 +13,18 @@
   const edit = () => {
     isReadonly.value = false;
   };
+
+  defineExpose({
+    isReadonly,
+    save,
+    edit
+  });
 </script>
 
 <template>
   <div>
     <Toolbar :isReadonly="isReadonly" @save="save" @edit="edit" />
-    <Summary :summary="summary" />
+    <Summary />
     <Payments :isReadonly="isReadonly" />
   </div>
 </template>

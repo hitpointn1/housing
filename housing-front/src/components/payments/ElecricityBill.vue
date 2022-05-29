@@ -1,14 +1,23 @@
 <script setup>
+  import { ref } from 'vue';
+  import { appService } from '../../core/appService';
   import PaymentEditableField from '../functional/PaymentEditableField.vue';
   
   defineProps({
       isReadonly: Boolean,
       bill: Object
-  })
+  });
+  
+  const bill = ref(null);
+  appService.getElecticityBill().then(v => bill.value = v);
+
+  defineExpose({
+    bill: Object
+  });
 </script>
 
 <template>
-  <div class="bill">
+  <div class="bill" v-if="bill">
     <i class="fa-solid fa-plug-circle-bolt"></i>
     <h3>Electricity</h3>
     <PaymentEditableField
@@ -23,7 +32,7 @@
       :data="bill.consumptionReadings" />
 
     <PaymentEditableField
-      :isReadonly="isReadonly"
+      :isReadonly="true"
       :title="'Previous readings'"
       :data="bill.previousConsumptionReadings" />
     

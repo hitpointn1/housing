@@ -6,72 +6,6 @@
   import ElecricityBill from './payments/ElecricityBill.vue';
   import HeatingBill from './payments/HeatingBill.vue';
 
-  const payments = {
-    elecricity: {
-      payment: {
-        value: 843.00,
-        diff: -50,
-      },
-      consumptionReadings: {
-        value: 10238,
-        diff: 220
-      },
-      previousConsumptionReadings: {
-        value: 10048,
-        diff: 183
-      }
-    },
-    water: {
-      payment: {
-        value: 600.00,
-        diff: -300,
-      },
-      hotReadings: {
-        value: 235,
-        diff: 7
-      },
-      previousHotReadings: {
-        value: 228,
-        diff: 6
-      },
-      coldReadings: {
-        predictedValue: 356
-      },
-      previousColdReadings: {
-        value: 350,
-        diff: 5
-      },
-    },
-    heating: {
-      payment: {
-        value: 822.00,
-        diff: -647,
-      }
-    },
-    additional: {
-      payment: {
-        value: 1238.00,
-        diff: 113,
-      },
-      internet: {
-        value: 450.00,
-        diff: 0
-      }
-    },
-    repairs: {
-      payment: {
-        value: 384.00,
-        diff: 0
-      }
-    },
-    rent: {
-      payment: {
-        value: 13000.00,
-        diff: 0
-      }
-    }
-  };
-
   defineProps({
     isReadonly: Boolean
   });
@@ -80,12 +14,12 @@
 <template>
   <h1>Payments</h1>
   <div class="payments">
-    <ElecricityBill class="payments__item" :isReadonly="isReadonly" :bill="payments.elecricity" />
-    <WaterBill class="payments__item" :isReadonly="isReadonly" :bill="payments.water" />
-    <HeatingBill class="payments__item" :isReadonly="isReadonly" :bill="payments.heating" />
-    <AdditionalBill class="payments__item" :isReadonly="isReadonly" :bill="payments.additional" />
-    <RepairsBill class="payments__item" :isReadonly="isReadonly" :bill="payments.repairs" />
-    <RentBill class="payments__item" :isReadonly="isReadonly" :bill="payments.rent" />
+    <ElecricityBill class="payments__item" :isReadonly="isReadonly" />
+    <WaterBill class="payments__item" :isReadonly="isReadonly" />
+    <HeatingBill class="payments__item" :isReadonly="isReadonly" />
+    <AdditionalBill class="payments__item" :isReadonly="isReadonly" />
+    <RepairsBill class="payments__item" :isReadonly="isReadonly" />
+    <RentBill class="payments__item" :isReadonly="isReadonly" />
   </div>
 </template>
 <style>
