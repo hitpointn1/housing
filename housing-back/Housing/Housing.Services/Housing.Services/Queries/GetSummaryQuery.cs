@@ -13,7 +13,7 @@ namespace Housing.Services.Queries
         {
             public Task<SummaryDto> Handle(GetSummaryQuery request, CancellationToken cancellationToken)
             {
-                return Task.FromResult(new SummaryDto() { TotalRent = 13000, TotalWithoutRent = 3476 });
+                return Task.FromResult(new SummaryDto { TotalRent = new(13000), TotalWithoutRent = new(3476, -250) });
             }
         }
     }

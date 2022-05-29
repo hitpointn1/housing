@@ -8,12 +8,8 @@ namespace Housing.Web.Controllers
 {
     public class SummaryController : BaseController
     {
-        private readonly IMediator _mediator;
-
         public SummaryController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+            : base(mediator) { }
 
         [HttpGet("{year}/{month}")]
         public Task<SummaryDto> Get([FromRoute] string year, [FromRoute] string month, [FromQuery] ReportType? type)

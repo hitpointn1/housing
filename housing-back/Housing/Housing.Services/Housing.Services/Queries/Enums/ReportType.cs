@@ -5,5 +5,6 @@
         Monthly,
         Quaterly,
         Yearly,
+        All
     }
 }

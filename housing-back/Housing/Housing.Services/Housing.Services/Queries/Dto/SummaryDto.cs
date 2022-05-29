@@ -2,8 +2,8 @@
 {
     public class SummaryDto
     {
-        public decimal Total => TotalRent + TotalWithoutRent;
-        public decimal TotalWithoutRent { get; set; }
-        public decimal TotalRent { get; set; }
+        public ValueDto Total => TotalRent + TotalWithoutRent;
+        public ValueDto? TotalWithoutRent { get; set; }
+        public ValueDto? TotalRent { get; set; }
     }
 }
