@@ -22,10 +22,11 @@ namespace Housing.Services.Queries.Dto
             }
         }
 
+        [EnumDataType(typeof(ReportType))]
+        private ReportType Type { get; set; }
+
         public DateOnly? Date { get; set; }
         public DateOnly? EndDate { get; set; }
-        [EnumDataType(typeof(ReportType))]
-        public ReportType Type { get; set; }
         public DateOnly? PreviousDate { get; set; }
         public DateOnly? PreviousEndDate { get; set; }
 

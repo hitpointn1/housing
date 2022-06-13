@@ -4,6 +4,8 @@
     {
         public static decimal Diff(decimal? current, decimal? previous)
         {
+            if (!previous.HasValue)
+                return 0;
             return (current ?? 0) - (previous ?? 0);
         }
 

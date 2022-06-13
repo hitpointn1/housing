@@ -1,6 +1,8 @@
-﻿using Housing.Services.Queries.Dto;
+﻿using Housing.Data;
+using Housing.Services.Queries.Dto;
 using Housing.Services.Queries.Enums;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Housing.Services.Queries
 {
@@ -11,9 +13,23 @@ namespace Housing.Services.Queries
 
         private class GetSummaryHandler : IRequestHandler<GetSummaryQuery, SummaryDto>
         {
-            public Task<SummaryDto> Handle(GetSummaryQuery request, CancellationToken cancellationToken)
+            private readonly HousingContext context;
+
+            public GetSummaryHandler(HousingContext context)
             {
-                return Task.FromResult(new SummaryDto { TotalRent = new(13000), TotalWithoutRent = new(3476, -250) });
+                this.context = context;
+            }
+
+            public async Task<SummaryDto> Handle(GetSummaryQuery request, CancellationToken cancellationToken)
+            {
+                var result = await context.GetSummary(request.Date, request.EndDate, request.PreviousDate, request.PreviousEndDate)
+                    .FirstOrDefaultAsync(cancellationToken);
+
+                return new SummaryDto
+                {
+                    TotalRent = new ValueDto(result.TotalRent, result.TotalRentDiff),
+                    TotalWithoutRent = new ValueDto(result.TotalWithoutRent, result.TotalWithoutRentDiff)
+                };
             }
         }
     }
