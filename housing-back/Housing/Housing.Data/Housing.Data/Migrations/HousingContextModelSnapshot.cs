@@ -25,136 +25,162 @@ namespace Housing.Data.Migrations
             modelBuilder.Entity("Housing.Data.Entities.AdditionalsBill", b =>
                 {
                     b.Property<long>("BillingId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("billing_id");
 
                     b.Property<decimal>("Internet")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)")
-                        .HasDefaultValue(0m);
+                        .HasDefaultValue(0m)
+                        .HasColumnName("internet");
 
                     b.Property<decimal>("Payment")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)")
-                        .HasDefaultValue(0m);
+                        .HasDefaultValue(0m)
+                        .HasColumnName("payment");
 
-                    b.HasKey("BillingId");
+                    b.HasKey("BillingId")
+                        .HasName("pk_additionals");
 
-                    b.ToTable("Additionals", "Bills");
+                    b.ToTable("additionals", "bills");
                 });
 
             modelBuilder.Entity("Housing.Data.Entities.Billing", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Appartments")
                         .IsRequired()
                         .HasMaxLength(450)
-                        .HasColumnType("character varying(450)");
+                        .HasColumnType("character varying(450)")
+                        .HasColumnName("appartments");
 
                     b.Property<DateOnly>("Date")
-                        .HasColumnType("Date");
+                        .HasColumnType("Date")
+                        .HasColumnName("date");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_billing");
 
-                    b.ToTable("Billing", "Bills");
+                    b.ToTable("billing", "bills");
                 });
 
             modelBuilder.Entity("Housing.Data.Entities.ElectricityBill", b =>
                 {
                     b.Property<long>("BillingId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("billing_id");
 
                     b.Property<int>("ConsumptionReadings")
                         .HasMaxLength(10)
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("consumption_readings");
 
                     b.Property<decimal>("Payment")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)")
-                        .HasDefaultValue(0m);
+                        .HasDefaultValue(0m)
+                        .HasColumnName("payment");
 
-                    b.HasKey("BillingId");
+                    b.HasKey("BillingId")
+                        .HasName("pk_electricity");
 
-                    b.ToTable("Electricity", "Bills");
+                    b.ToTable("electricity", "bills");
                 });
 
             modelBuilder.Entity("Housing.Data.Entities.HeatingBill", b =>
                 {
                     b.Property<long>("BillingId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("billing_id");
 
                     b.Property<decimal>("Payment")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)")
-                        .HasDefaultValue(0m);
+                        .HasDefaultValue(0m)
+                        .HasColumnName("payment");
 
-                    b.HasKey("BillingId");
+                    b.HasKey("BillingId")
+                        .HasName("pk_heating");
 
-                    b.ToTable("Heating", "Bills");
+                    b.ToTable("heating", "bills");
                 });
 
             modelBuilder.Entity("Housing.Data.Entities.Rent", b =>
                 {
                     b.Property<long>("BillingId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("billing_id");
 
                     b.Property<decimal>("Payment")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)")
-                        .HasDefaultValue(0m);
+                        .HasDefaultValue(0m)
+                        .HasColumnName("payment");
 
-                    b.HasKey("BillingId");
+                    b.HasKey("BillingId")
+                        .HasName("pk_rent");
 
-                    b.ToTable("Rent", "Bills");
+                    b.ToTable("rent", "bills");
                 });
 
             modelBuilder.Entity("Housing.Data.Entities.RepairsBill", b =>
                 {
                     b.Property<long>("BillingId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("billing_id");
 
                     b.Property<decimal>("Payment")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)")
-                        .HasDefaultValue(0m);
+                        .HasDefaultValue(0m)
+                        .HasColumnName("payment");
 
-                    b.HasKey("BillingId");
+                    b.HasKey("BillingId")
+                        .HasName("pk_repairs");
 
-                    b.ToTable("Repairs", "Bills");
+                    b.ToTable("repairs", "bills");
                 });
 
             modelBuilder.Entity("Housing.Data.Entities.WaterBill", b =>
                 {
                     b.Property<long>("BillingId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("billing_id");
 
                     b.Property<int>("ColdReadings")
                         .HasMaxLength(10)
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("cold_readings");
 
                     b.Property<int>("HotReadings")
                         .HasMaxLength(10)
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("hot_readings");
 
                     b.Property<decimal>("Payment")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)")
-                        .HasDefaultValue(0m);
+                        .HasDefaultValue(0m)
+                        .HasColumnName("payment");
 
-                    b.HasKey("BillingId");
+                    b.HasKey("BillingId")
+                        .HasName("pk_water");
 
-                    b.ToTable("Water", "Bills");
+                    b.ToTable("water", "bills");
                 });
 
             modelBuilder.Entity("Housing.Data.Entities.AdditionalsBill", b =>
@@ -163,7 +189,8 @@ namespace Housing.Data.Migrations
                         .WithOne("Additionals")
                         .HasForeignKey("Housing.Data.Entities.AdditionalsBill", "BillingId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_additionals_billings_billing_id");
 
                     b.Navigation("Billing");
                 });
@@ -174,7 +201,8 @@ namespace Housing.Data.Migrations
                         .WithOne("ElectricityBill")
                         .HasForeignKey("Housing.Data.Entities.ElectricityBill", "BillingId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_electricity_billing_billing_id");
 
                     b.Navigation("Billing");
                 });
@@ -185,7 +213,8 @@ namespace Housing.Data.Migrations
                         .WithOne("HeatingBill")
                         .HasForeignKey("Housing.Data.Entities.HeatingBill", "BillingId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_heating_billing_billing_id");
 
                     b.Navigation("Billing");
                 });
@@ -196,7 +225,8 @@ namespace Housing.Data.Migrations
                         .WithOne("Rent")
                         .HasForeignKey("Housing.Data.Entities.Rent", "BillingId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_rent_billing_billing_id");
 
                     b.Navigation("Billing");
                 });
@@ -207,7 +237,8 @@ namespace Housing.Data.Migrations
                         .WithOne("RepairsBill")
                         .HasForeignKey("Housing.Data.Entities.RepairsBill", "BillingId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_repairs_billing_billing_id");
 
                     b.Navigation("Billing");
                 });
@@ -218,7 +249,8 @@ namespace Housing.Data.Migrations
                         .WithOne("WaterBill")
                         .HasForeignKey("Housing.Data.Entities.WaterBill", "BillingId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_water_billing_billing_id");
 
                     b.Navigation("Billing");
                 });

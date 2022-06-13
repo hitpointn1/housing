@@ -8,7 +8,7 @@ namespace Housing.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<RepairsBill> builder)
         {
-            builder.ToTable("Repairs", Constants.BillsSchema);
+            builder.ToTable("repairs", Constants.BillsSchema);
             builder.HasKey(k => k.BillingId);
 
             builder.HasOne(name => name.Billing)

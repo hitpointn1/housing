@@ -9,7 +9,7 @@ namespace Housing.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Billing> builder)
         {
-            builder.ToTable(nameof(Billing), Constants.BillsSchema);
+            builder.ToTable("billing", Constants.BillsSchema);
             builder.HasKey(k => k.Id);
 
             builder.Property(k => k.Date).HasColumnType(NpgsqlDbType.Date.ToString());

@@ -2,6 +2,6 @@
 {
     public class Constants
     {
-        public const string BillsSchema = "Bills";
+        public const string BillsSchema = "bills";
     }
 }
