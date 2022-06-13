@@ -1,6 +1,11 @@
-﻿using Housing.Services.Queries.Dto;
+﻿using Housing.Data;
+using Housing.Data.Entities;
+using Housing.Data.Helpers;
+using Housing.Services.Helpers;
+using Housing.Services.Queries.Dto;
 using Housing.Services.Queries.Enums;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Housing.Services.Queries
 {
@@ -11,14 +16,32 @@ namespace Housing.Services.Queries
 
         private class GetElectricityBillHandler : IRequestHandler<GetElectricityBillQuery, ElectricityBillDto>
         {
-            public Task<ElectricityBillDto> Handle(GetElectricityBillQuery request, CancellationToken cancellationToken)
+            private readonly HousingContext context;
+
+            public GetElectricityBillHandler(HousingContext context)
             {
-                return Task.FromResult(new ElectricityBillDto
+                this.context = context;
+            }
+
+            public async Task<ElectricityBillDto> Handle(GetElectricityBillQuery request, CancellationToken cancellationToken)
+            {
+                var current = await context.Set<ElectricityBill>()
+                    .Aggregate(request.Date, request.EndDate)
+                    .SingleOrDefaultAsync(cancellationToken);
+
+                var previous = await context.Set<ElectricityBill>()
+                    .Aggregate(request.PreviousDate, request.PreviousEndDate)
+                    .SingleOrDefaultAsync(cancellationToken);
+
+                var paymentDiff = MathHelper.Diff(current.Payment, previous.Payment);
+                var consumptionDiff = MathHelper.Diff(current.ConsumptionReadings, previous.ConsumptionReadings);
+                var consumptionPrediction = MathHelper.Prediction(current.ConsumptionReadings, previous.ConsumptionReadingsMin, current.ConsumptionReadingsCount, previous.ConsumptionReadingsCount);
+
+                return new ElectricityBillDto
                 {
-                    Payment = new(843, -50),
-                    ConsumptionReadings = new(10238, 228),
-                    PreviousConsumptionReadings = new(10048, 183)
-                });
+                    Payment = new ValueDto(current.Payment, paymentDiff, current.PaymentAVG),
+                    ConsumptionReadings = new ValueDto(current.ConsumptionReadings, consumptionDiff, consumptionPrediction)
+                };
             }
         }
     }

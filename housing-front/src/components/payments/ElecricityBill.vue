@@ -30,11 +30,6 @@
       :isReadonly="isReadonly"
       :title="'Consumption readings'"
       :data="bill.consumptionReadings" />
-
-    <PaymentEditableField
-      :isReadonly="true"
-      :title="'Previous readings'"
-      :data="bill.previousConsumptionReadings" />
     
   </div>
 </template>

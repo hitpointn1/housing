@@ -3,18 +3,18 @@
     public struct ValueDto
     {
         public ValueDto(decimal? value)
-            :this(value ?? 0, 0, null)
+            :this(value, 0, null)
         { }
 
         public ValueDto(decimal? value, decimal? diff)
-            :this(value ?? 0, diff ?? 0, null)
+            :this(value, diff, null)
         { }
 
         public ValueDto(decimal? value, decimal? diff, decimal? predictedValue)
         {
             Value = value;
             Diff = diff;
-            PredictedValue = predictedValue;
+            PredictedValue = predictedValue ?? 0;
         }
 
         public decimal? Value { get; set; }

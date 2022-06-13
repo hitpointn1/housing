@@ -1,6 +1,11 @@
-﻿using Housing.Services.Queries.Dto;
+﻿using Housing.Data;
+using Housing.Data.Entities;
+using Housing.Data.Helpers;
+using Housing.Services.Helpers;
+using Housing.Services.Queries.Dto;
 using Housing.Services.Queries.Enums;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Housing.Services.Queries
 {
@@ -12,16 +17,35 @@ namespace Housing.Services.Queries
 
         private class GetWaterBillHandler : IRequestHandler<GetWaterBillQuery, WaterBillDto>
         {
-            public Task<WaterBillDto> Handle(GetWaterBillQuery request, CancellationToken cancellationToken)
+            private readonly HousingContext context;
+
+            public GetWaterBillHandler(HousingContext context)
             {
-                return Task.FromResult(new WaterBillDto
+                this.context = context;
+            }
+
+            public async Task<WaterBillDto> Handle(GetWaterBillQuery request, CancellationToken cancellationToken)
+            {
+                var current = await context.Set<WaterBill>()
+                    .Aggregate(request.Date, request.EndDate)
+                    .SingleOrDefaultAsync(cancellationToken);
+
+                var previous = await context.Set<WaterBill>()
+                    .Aggregate(request.PreviousDate, request.PreviousEndDate)
+                    .SingleOrDefaultAsync(cancellationToken);
+
+                var paymentDiff = MathHelper.Diff(current.Payment, previous.Payment);
+                var coldDiff = MathHelper.Diff(current.ColdReadings, previous.ColdReadings);
+                var coldPrediction = MathHelper.Prediction(current.ColdReadings, previous.ColdReadingsMin, current.ReadingsCount, previous.ReadingsCount);
+                var hotDiff = MathHelper.Diff(current.HotReadings, previous.HotReadings);
+                var hotPrediction = MathHelper.Prediction(current.HotReadings, previous.HotReadingsMin, current.ReadingsCount, previous.ReadingsCount);
+
+                return new WaterBillDto
                 {
-                    Payment = new(600, -300),
-                    ColdReadings = new(null, null, 356),
-                    HotReadings = new(235, 7),
-                    PreviousColdReadings = new(350, 5),
-                    PreviousHotReadings = new(228, 6)
-                });
+                    Payment = new ValueDto(current.Payment, paymentDiff, current.PaymentAVG),
+                    ColdReadings = new ValueDto(current.ColdReadings, coldDiff, coldPrediction),
+                    HotReadings = new ValueDto(current.HotReadings, hotDiff, hotPrediction)
+                };
             }
         }
     }

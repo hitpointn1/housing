@@ -1,4 +1,5 @@
-﻿using Housing.Services.Queries.Dto;
+﻿using Housing.Data.Entities;
+using Housing.Services.Queries.Dto;
 using Housing.Services.Queries.Enums;
 using MediatR;
 
@@ -11,9 +12,16 @@ namespace Housing.Services.Queries
 
         private class GetRepairsBillHandler : IRequestHandler<GetRepairsBillQuery, PaymentDto>
         {
+            private readonly PaymentRetrievalTemplate _template;
+
+            public GetRepairsBillHandler(PaymentRetrievalTemplate template)
+            {
+                _template = template;
+            }
+
             public Task<PaymentDto> Handle(GetRepairsBillQuery request, CancellationToken cancellationToken)
             {
-                return new PaymentRetrievalTemplate().Get(request);
+                return _template.Get<RepairsBill>(request, cancellationToken);
             }
         }
     }

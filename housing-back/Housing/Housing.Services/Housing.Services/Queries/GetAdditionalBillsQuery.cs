@@ -1,6 +1,11 @@
-﻿using Housing.Services.Queries.Dto;
+﻿using Housing.Data;
+using Housing.Data.Entities;
+using Housing.Data.Helpers;
+using Housing.Services.Helpers;
+using Housing.Services.Queries.Dto;
 using Housing.Services.Queries.Enums;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Housing.Services.Queries
 {
@@ -11,13 +16,28 @@ namespace Housing.Services.Queries
 
         private class GetAdditionalBillsHandler : IRequestHandler<GetAdditionalBillsQuery, AdditionalsBillDto>
         {
-            public Task<AdditionalsBillDto> Handle(GetAdditionalBillsQuery request, CancellationToken cancellationToken)
+            private readonly HousingContext context;
+
+            public GetAdditionalBillsHandler(HousingContext context)
             {
-                return Task.FromResult(new AdditionalsBillDto
+                this.context = context;
+            }
+
+            public async Task<AdditionalsBillDto> Handle(GetAdditionalBillsQuery request, CancellationToken cancellationToken)
+            {
+                var rangeGroup = await context.Set<AdditionalsBill>()
+                    .Aggregate(request.Date, request.EndDate)
+                    .SingleOrDefaultAsync(cancellationToken);
+
+                var previousGroup = await context.Set<AdditionalsBill>()
+                    .Aggregate(request.PreviousDate, request.PreviousEndDate)
+                    .SingleOrDefaultAsync(cancellationToken);
+
+                return new AdditionalsBillDto
                 {
-                    Payment = new(1238, 113),
-                    Internet = new(450)
-                });
+                    Internet = new ValueDto(rangeGroup.Internet, MathHelper.Diff(rangeGroup.Internet, previousGroup.Internet), rangeGroup.InternetAVG),
+                    Payment = new ValueDto(rangeGroup.Payment, MathHelper.Diff(rangeGroup.Payment, previousGroup.Payment), rangeGroup.PaymentAVG),
+                };
             }
         }
     }

@@ -1,11 +1,10 @@
 ﻿using Housing.Data.Helpers;
-using Housing.Services.Pipes;
 using Housing.Services.Queries.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace Housing.Services.Queries.Dto
 {
-    public class RequestDto : IEnsureRecordExists
+    public class RequestDto
     {
         public RequestDto(string year, string month, ReportType? type)
         {
@@ -15,14 +14,22 @@ namespace Housing.Services.Queries.Dto
             Type = type ?? ReportType.Monthly;
             Date = Get(yearParsed, monthParsed, Type);
             EndDate = GetEnd(Date, Type);
+
+            if (Date.HasValue)
+            {
+                PreviousDate = Get(Date.Value.AddMonths(-1), Type);
+                PreviousEndDate = GetEnd(PreviousDate, Type);
+            }
         }
 
-        public DateTime? Date { get; set; }
-        public DateTime? EndDate { get; set; }
+        public DateOnly? Date { get; set; }
+        public DateOnly? EndDate { get; set; }
         [EnumDataType(typeof(ReportType))]
         public ReportType Type { get; set; }
+        public DateOnly? PreviousDate { get; set; }
+        public DateOnly? PreviousEndDate { get; set; }
 
-        private static DateTime? Get(int year, int month, ReportType type)
+        private static DateOnly? Get(int year, int month, ReportType type)
         {
             return type switch
             {
@@ -34,7 +41,12 @@ namespace Housing.Services.Queries.Dto
             };
         }
 
-        private static DateTime? GetEnd(DateTime? startDate, ReportType type)
+        private static DateOnly? Get(DateOnly date, ReportType type)
+        {
+            return Get(date.Year, date.Month, type);
+        }
+
+        private static DateOnly? GetEnd(DateOnly? startDate, ReportType type)
         {
             var start = startDate.GetValueOrDefault();
             return type switch

@@ -29,21 +29,11 @@
       :isReadonly="isReadonly"
       :title="'Hot water readings'"
       :data="bill.hotReadings" />
-      
-    <PaymentEditableField
-      :isReadonly="true"
-      :title="'Previous hot'"
-      :data="bill.previousHotReadings" />
 
     <PaymentEditableField
       :isReadonly="isReadonly"
       :title="'Cold water readings'"
       :data="bill.coldReadings" />
-
-    <PaymentEditableField
-      :isReadonly="true"
-      :title="'Previous cold'"
-      :data="bill.previousColdReadings" />
     
   </div>
 </template>
