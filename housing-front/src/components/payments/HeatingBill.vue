@@ -1,6 +1,6 @@
 <script setup>
-  import { ref } from 'vue';
-  import { appService } from '../../core/appService';
+  import { storeToRefs } from 'pinia';
+  import { useBillingStore } from '../../core/stores/billingStore';
   import PaymentEditableField from '../functional/PaymentEditableField.vue';
   
   defineProps({
@@ -8,22 +8,25 @@
       bill: Object
   });
   
-  const bill = ref(null);
-  appService.getHeatingBill().then(v => bill.value = v);
+  const store = useBillingStore();
+
+  store.getHeatingBill();
+  
+  const { heatingBill } = storeToRefs(store);
 
   defineExpose({
-    bill: Object
+    heatingBill: Object
   });
 </script>
 
 <template>
-  <div class="bill" v-if="bill">
+  <div class="bill" v-if="heatingBill">
     <i class="fa-solid fa-temperature-arrow-up"></i>
     <h3>Heating</h3>
     <PaymentEditableField
       :isReadonly="isReadonly"
       :title="'Invoice amount'"
-      :data="bill.payment"
+      :data="heatingBill.payment"
       :isCurrency="true" />
     
   </div>

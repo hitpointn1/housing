@@ -1,29 +1,22 @@
 <script setup>
-  import { ref } from 'vue';
+  import { storeToRefs } from 'pinia';
   import Payments from './components/Payments.vue';
   import Summary from './components/Summary.vue';
   import Toolbar from './components/Toolbar.vue';
+  import { useSettingsStore } from './core/stores/settingsStore';
 
-  const isReadonly = ref(false);
+  const store = useSettingsStore();
 
-  const save = () => {
-    isReadonly.value = true;
-  };
-
-  const edit = () => {
-    isReadonly.value = false;
-  };
+  const { isReadonly } = storeToRefs(store);
 
   defineExpose({
-    isReadonly,
-    save,
-    edit
+    isReadonly
   });
 </script>
 
 <template>
   <div>
-    <Toolbar :isReadonly="isReadonly" @save="save" @edit="edit" />
+    <Toolbar :isReadonly="isReadonly" />
     <Summary />
     <Payments :isReadonly="isReadonly" />
   </div>

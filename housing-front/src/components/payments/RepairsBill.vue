@@ -1,28 +1,31 @@
 <script setup>
-  import { ref } from 'vue';
-  import { appService } from '../../core/appService';
+  import { storeToRefs } from 'pinia';
+  import { useBillingStore } from '../../core/stores/billingStore';
   import PaymentEditableField from '../functional/PaymentEditableField.vue';
   
   defineProps({
       isReadonly: Boolean
   });
   
-  const bill = ref(null);
-  appService.getRepairsBill().then(v => bill.value = v);
+  const store = useBillingStore();
+
+  store.getRepairsBill();
+  
+  const { repairsBill } = storeToRefs(store);
 
   defineExpose({
-    bill: Object
+    repairsBill: Object
   });
 </script>
 
 <template>
-  <div class="bill" v-if="bill">
+  <div class="bill" v-if="repairsBill">
     <i class="fa-solid fa-toolbox"></i>
     <h3>Overhaul</h3>
     <PaymentEditableField
       :isReadonly="isReadonly"
       :title="'Invoice amount'"
-      :data="bill.payment"
+      :data="repairsBill.payment"
       :isCurrency="true" />
     
   </div>

@@ -1,6 +1,6 @@
 <script setup>
-  import { ref } from 'vue';
-  import { appService } from '../../core/appService';
+  import { storeToRefs } from 'pinia';
+  import { useBillingStore } from '../../core/stores/billingStore';
   import PaymentEditableField from '../functional/PaymentEditableField.vue';
   
   defineProps({
@@ -8,28 +8,31 @@
       bill: Object
   });
   
-  const bill = ref(null);
-  appService.getAdditionalBill().then(v => bill.value = v);
+  const store = useBillingStore();
+
+  store.getAdditionalBill();
+
+  const { additionalsBill } = storeToRefs(store);
 
   defineExpose({
-    bill: Object
+    additionalsBill: Object
   });
 </script>
 
 <template>
-  <div class="bill" v-if="bill">
+  <div class="bill" v-if="additionalsBill">
     <i class="fa-solid fa-warehouse"></i>
     <h3>Elevator, guards, internet, ... etc</h3>
     <PaymentEditableField
       :isReadonly="isReadonly"
       :title="'Invoice amount'"
-      :data="bill.payment"
+      :data="additionalsBill.payment"
       :isCurrency="true" />
 
     <PaymentEditableField
       :isReadonly="isReadonly"
       :title="'internet'"
-      :data="bill.internet"
+      :data="additionalsBill.internet"
       :isCurrency="true" />
     
   </div>

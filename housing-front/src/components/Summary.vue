@@ -1,11 +1,13 @@
 <script setup>
-  import { ref } from 'vue';
-import { appService } from '../core/appService';
-import PaymentField from './functional/PaymentField.vue';
+  import PaymentField from './functional/PaymentField.vue';
+  import { useSummaryStore } from '../core/stores/summaryStore';
+  import { storeToRefs } from 'pinia';
 
-  const summary = ref(null);
+  const store = useSummaryStore();
 
-  appService.getSummary().then(v => summary.value = v);
+  store.getSummary();
+  
+  const { summary } = storeToRefs(store);
 
   defineExpose({
     summary: Object
