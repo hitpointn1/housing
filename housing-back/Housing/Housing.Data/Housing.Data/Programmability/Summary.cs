@@ -2,7 +2,7 @@
 {
     public class Summary
     {
-        public decimal TotalWithoutRent { get; set; }
-        public decimal TotalRent { get; set; }
+        public decimal? TotalWithoutRent { get; set; }
+        public decimal? TotalRent { get; set; }
     }
 }

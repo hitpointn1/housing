@@ -1,9 +1,9 @@
 ﻿CREATE OR REPLACE FUNCTION bills.get_summary (r_start date, r_end date, prev_start date, prev_end date)
 returns table (
-    total_wo_rent      numeric,
+    total_wo_rent       numeric,
     total_wo_rent_diff  numeric,
-    total_rent        numeric,
-    total_rent_diff    numeric
+    total_rent          numeric,
+    total_rent_diff     numeric
 )
 language plpgsql
 as $$
@@ -12,12 +12,14 @@ begin
 		select
 			cur.total_wo_rent,
             case
-                when prev.total_wo_rent = 0 then 0
+                when prev.total_wo_rent = 0 or prev.total_wo_rent is null then 0
+                when cur.total_wo_rent is null then 0 - prev.total_wo_rent
                 else cur.total_wo_rent - prev.total_wo_rent
             end,
 			cur.total_rent,
             case
-                when prev.total_rent = 0 then 0
+                when prev.total_rent = 0 or prev.total_rent is null then 0
+                when cur.total_rent is null then 0 - prev.total_rent
                 else cur.total_rent - prev.total_rent
             end
 		from bills.get_total(r_start, r_end) cur

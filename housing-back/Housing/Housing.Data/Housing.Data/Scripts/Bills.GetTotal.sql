@@ -8,8 +8,17 @@ as $$
 begin
 	return query 
 		select
-			COALESCE(SUM(ad.payment + ad.internet + wa.payment + el.payment + re.payment + he.payment), 0),
-			COALESCE(SUM(rent.payment), 0)
+			SUM(
+                COALESCE(ad.payment, 0) +
+                COALESCE(ad.internet, 0) +
+                COALESCE(wa.payment, 0) +
+                COALESCE(el.payment, 0) +
+                COALESCE(re.payment, 0) +
+                COALESCE(he.payment, 0)
+            ),
+			SUM(
+                COALESCE(rent.payment, 0)
+            )
 		from bills.billing b
         left join bills.additionals ad on ad.billing_id = b.id
         left join bills.water wa on wa.billing_id = b.id
