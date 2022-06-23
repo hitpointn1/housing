@@ -1,6 +1,7 @@
 <script setup>
   import { storeToRefs } from 'pinia';
   import { useBillingStore } from '../../core/stores/billingStore';
+  import { getAllEffect } from '../../core/stores/summaryStore';
   import PaymentEditableField from '../functional/PaymentEditableField.vue';
   
   defineProps({
@@ -12,6 +13,8 @@
   store.getRentBill();
   
   const { rentBill } = storeToRefs(store);
+
+  getAllEffect(() => store.getRentBill());
 
   defineExpose({
     rentBill: Object

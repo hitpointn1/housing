@@ -10,7 +10,7 @@ function getActionUrl(reportDate, reportType, controller, method) {
 
     builder.withRoute(reportDate.getFullYear());
     builder.withRoute((reportDate.getMonth() + 1));
-    builder.withParameter('type', null);
+    builder.withParameter('type', reportType);
 
     return builder.build();
 }

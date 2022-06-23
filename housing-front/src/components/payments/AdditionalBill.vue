@@ -1,6 +1,7 @@
 <script setup>
   import { storeToRefs } from 'pinia';
   import { useBillingStore } from '../../core/stores/billingStore';
+  import { getAllEffect } from '../../core/stores/summaryStore';
   import PaymentEditableField from '../functional/PaymentEditableField.vue';
   
   defineProps({
@@ -11,6 +12,8 @@
   const store = useBillingStore();
 
   store.getAdditionalBill();
+
+  getAllEffect(() => store.getAdditionalBill());
 
   const { additionalsBill } = storeToRefs(store);
 

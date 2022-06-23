@@ -10,7 +10,7 @@
   const { isReadonly } = storeToRefs(store);
 
   defineExpose({
-    isReadonly
+    isReadonly: Boolean
   });
 </script>
 

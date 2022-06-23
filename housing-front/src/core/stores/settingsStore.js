@@ -4,16 +4,26 @@ const now = new Date();
 
 export const useSettingsStore = defineStore('settingsStore', {
   state: () => ({
-    reportDate: new Date(now.getFullYear(), now.getMonth() - 1, 1),
+    reportYear: now.getFullYear(),
+    reportMonth: now.getMonth() - 1,
     reportType: 0,
     isReadonly: true
   }),
   actions: {
-    readonly() {
+    setAsReadonly() {
       this.isReadonly = true;
     },
-    editable() {
+    setAsEditable() {
       this.isReadonly = false;
+    },
+    setMonth(month) {
+      this.reportMonth = month;
+    },
+    setYear(year) {
+      this.reportYear = year;
     }
+  },
+  getters: {
+    reportDate: (state) => new Date(state.reportYear, state.reportMonth, 1),
   }
 });

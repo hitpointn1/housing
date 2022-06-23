@@ -1,23 +1,22 @@
-<script>
+<script setup>
+  import { computed } from '@vue/reactivity';
   import CurrencySymbol from './CurrencySymbol.vue';
-  export default {
-    props: {
-        value: Number,
-        showCurrency: Boolean
-    },
-    setup(props) {
-        const value = props.showCurrency ? Math.abs(props.value ?? 0).toFixed(2) : Math.abs(props.value ?? 0);
-        return {
-            value
-        };
-    },
-    components: { CurrencySymbol }
-  }
+
+  const props = defineProps({
+    value: Number,
+    showCurrency: Boolean
+  });
+
+  const valueRef = computed(() => props.showCurrency ? Math.abs(props.value ?? 0).toFixed(2) : Math.abs(props.value ?? 0).toString());
+  
+  defineExpose({
+    valueRef: String
+  });
 </script>
 
 <template>
   <div class="currency">
-    <span class="currency__value">{{ value }}</span>
+    <span class="currency__value">{{ valueRef }}</span>
     <CurrencySymbol v-if="showCurrency" />
   </div>
 </template>

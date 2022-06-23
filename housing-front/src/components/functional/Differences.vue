@@ -1,17 +1,16 @@
-<script>
-  export default {
-    props: {
-        diff: Number,
-        needNormalize: Boolean
-    },
-    setup(props) {
-      const diffNormalized = props.needNormalize ? Math.abs(props.diff ?? 0).toFixed(2) : Math.abs(props.diff ?? 0);
+<script setup>
+  import { computed } from '@vue/reactivity';
 
-      return {
-          diffNormalized
-      };
-    }
-  }
+  const props = defineProps({
+    diff: Number,
+    needNormalize: Boolean
+  });
+
+  const diffNormalized = computed(() => props.needNormalize ? Math.abs(props.diff ?? 0).toFixed(2) : Math.abs(props.diff ?? 0).toString());
+
+  defineExpose({
+    diffNormalized: String
+  });
 </script>
 
 <template>
