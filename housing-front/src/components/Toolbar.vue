@@ -24,14 +24,6 @@
   const editable = () => {
     store.setAsEditable();
   };
-  
-  defineExpose({
-    showDialog: Boolean,
-    reportDate: Date,
-    toggleDialog: Function,
-    readonly: Function,
-    editable: Function
-  });
 </script>
 
 <template>

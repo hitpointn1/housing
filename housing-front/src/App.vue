@@ -8,10 +8,6 @@
   const store = useSettingsStore();
 
   const { isReadonly } = storeToRefs(store);
-
-  defineExpose({
-    isReadonly: Boolean
-  });
 </script>
 
 <template>

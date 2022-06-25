@@ -15,10 +15,6 @@
   const { waterBill } = storeToRefs(store);
 
   getAllEffect(() => store.getWaterBill());
-
-  defineExpose({
-    waterBill: Object
-  });
 </script>
 
 <template>

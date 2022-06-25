@@ -15,10 +15,6 @@
   const { rentBill } = storeToRefs(store);
 
   getAllEffect(() => store.getRentBill());
-
-  defineExpose({
-    rentBill: Object
-  });
 </script>
 
 <template>

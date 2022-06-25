@@ -16,10 +16,6 @@
   const { heatingBill } = storeToRefs(store);
 
   getAllEffect(() => store.getHeatingBill());
-
-  defineExpose({
-    heatingBill: Object
-  });
 </script>
 
 <template>

@@ -7,10 +7,6 @@
   });
 
   const diffNormalized = computed(() => props.needNormalize ? Math.abs(props.diff ?? 0).toFixed(2) : Math.abs(props.diff ?? 0).toString());
-
-  defineExpose({
-    diffNormalized: String
-  });
 </script>
 
 <template>

@@ -11,12 +11,6 @@
   
   const { summary } = storeToRefs(store);
   const { reportType } = storeToRefs(useSettingsStore());
-
-  defineExpose({
-    summary: Object,
-    reportValues: Object,
-    reportType: Number
-  });
 </script>
 
 <template>

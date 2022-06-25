@@ -16,10 +16,6 @@
   getAllEffect(() => store.getAdditionalBill());
 
   const { additionalsBill } = storeToRefs(store);
-
-  defineExpose({
-    additionalsBill: Object
-  });
 </script>
 
 <template>

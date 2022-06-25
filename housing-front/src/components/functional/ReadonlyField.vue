@@ -8,10 +8,6 @@
   });
 
   const valueRef = computed(() => props.showCurrency ? Math.abs(props.value ?? 0).toFixed(2) : Math.abs(props.value ?? 0).toString());
-  
-  defineExpose({
-    valueRef: String
-  });
 </script>
 
 <template>
