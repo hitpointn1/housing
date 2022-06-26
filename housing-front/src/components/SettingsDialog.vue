@@ -5,6 +5,7 @@
   import { reportTypes } from '../core/helpers/reportTypes';
   import { useSummaryStore } from '../core/stores/summaryStore';
   import { ref } from 'vue';
+  import DropDownList from './functional/DropDownList.vue';
 
   defineProps({
     showDialog: Boolean
@@ -16,6 +17,12 @@
 
   const monthDate = ref(reportYear.value + '-' + reportMonth.value.toString().padStart(2, '0'));
   const quarterRef = ref(quarter.value);
+  const quarters = {
+    Q1: 1,
+    Q2: 2,
+    Q3: 3,
+    Q4: 4
+  }
 
   const typeChange = () => {
     summaryStore.getAll();
@@ -41,43 +48,43 @@
     settingsStore.setMonth(month);
     summaryStore.getAll();
   }
-
-  defineExpose({
-    reportType: Number,
-    reportTypes: Object,
-    monthDate: String,
-    reportYear: Number,
-    quarterRef: Number
-  });
 </script>
 
 <template>
   <Dialog :show="showDialog">
     <div class="toolbar__dialog">
       <h3>Settings</h3>
-      <label>Select report type:</label>
-      <select v-model="reportType" @change="typeChange">
-        <option v-for="report in Object.keys(reportTypes)" :value="reportTypes[report]">{{ report }}</option>
-      </select>
-      <template v-if="reportType === reportTypes.Monthly">
+
+      <div class="toolbar__dialog--field">
+        <label>Select report type:</label>
+        <DropDownList :options="reportTypes" v-model="reportType" @change="typeChange" />
+      </div>
+     
+      <div v-if="reportType === reportTypes.Monthly" class="toolbar__dialog--field">
         <label>Select month:</label>
         <input type="month" v-model="monthDate" @change="monthChange" />
-      </template>
+      </div>
+
       <template v-else-if="reportType === reportTypes.Quarterly">
-        <label>Select year:</label>
-        <input type="number" min="1990" max="2099" step="1" v-model="reportYear" @change="quarterChange"/>
-        <label>Select quarter:</label>
-        <select v-model="quarterRef" @change="quarterChange">
-          <option :value="1">Q1</option>
-          <option :value="2">Q2</option>
-          <option :value="3">Q3</option>
-          <option :value="4">Q4</option>
-        </select>
+        <div class="toolbar__dialog--field">
+          <label>Select year:</label>
+          <input type="number" min="1990" max="2099" step="1" v-model="reportYear" @change="quarterChange"/>
+        </div>
+        <div class="toolbar__dialog--field">
+          <label>Select quarter:</label>
+          <DropDownList :options="quarters" v-model="quarterRef" @change="quarterChange" />
+        </div>
       </template>
-      <template v-else-if="reportType === reportTypes.Annually">
+
+      <div v-else-if="reportType === reportTypes.Annually" class="toolbar__dialog--field">
         <label>Select year:</label>
         <input type="number" min="1990" max="2099" step="1" v-model="reportYear" @change="yearChange"/>
-      </template>
+      </div>
+
+      <div v-if="reportType === reportTypes['All-Time']" class="toolbar__dialog--field">
+        <label>Select from:</label>
+        <input type="month" v-model="monthDate" @change="monthChange" />
+      </div>
     </div>
   </Dialog>
 </template>
@@ -86,5 +93,24 @@
   .toolbar__dialog {
     display: flex;
     flex-direction: column;
+    padding-left: 5px;
+    align-items: flex-start;
+
+    &--field {
+      margin-top: 15px;
+      display: inherit;
+      flex-direction: inherit;
+      align-items: inherit;
+      width: 100%;
+
+      label {
+        font-size: 75%;
+        margin-bottom: 5px;
+      }
+
+      input {
+        width: 100%;
+      }
+    }
   }
 </style>
