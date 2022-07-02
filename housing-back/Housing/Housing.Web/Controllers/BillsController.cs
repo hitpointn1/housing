@@ -1,6 +1,6 @@
-﻿using Housing.Services.Queries;
-using Housing.Services.Queries.Dto;
-using Housing.Services.Queries.Enums;
+﻿using Housing.Services.Queries.Bills;
+using Housing.Services.Queries.Bills.Dto;
+using Housing.Services.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

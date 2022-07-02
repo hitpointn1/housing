@@ -1,10 +1,10 @@
 ﻿using Housing.Data;
 using Housing.Data.Entities;
 using Housing.Data.Helpers;
-using Housing.Services.Queries.Dto;
+using Housing.Services.Queries.Bills.Dto;
 using Microsoft.EntityFrameworkCore;
 
-namespace Housing.Services.Queries
+namespace Housing.Services.Queries.Bills
 {
     public class PaymentRetrievalTemplate
     {

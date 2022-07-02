@@ -1,12 +1,12 @@
 ﻿using Housing.Data;
 using Housing.Data.Entities;
 using Housing.Data.Helpers;
-using Housing.Services.Queries.Dto;
-using Housing.Services.Queries.Enums;
+using Housing.Services.Enums;
+using Housing.Services.Queries.Bills.Dto;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Housing.Services.Queries
+namespace Housing.Services.Queries.Bills
 {
     public class GetElectricityBillQuery : RequestDto, IRequest<ElectricityBillDto>
     {

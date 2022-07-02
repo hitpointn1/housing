@@ -1,10 +1,11 @@
 ﻿using Housing.Data;
-using Housing.Services.Queries.Dto;
-using Housing.Services.Queries.Enums;
+using Housing.Services.Queries.Bills.Dto;
+using Housing.Services.Queries.Summary.Dto;
+using Housing.Services.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Housing.Services.Queries
+namespace Housing.Services.Queries.Bills
 {
     public class GetSummaryQuery : RequestDto, IRequest<SummaryDto>
     {

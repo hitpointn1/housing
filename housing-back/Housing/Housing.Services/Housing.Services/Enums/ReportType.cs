@@ -1,4 +1,4 @@
-﻿namespace Housing.Services.Queries.Enums
+﻿namespace Housing.Services.Enums
 {
     public enum ReportType : byte
     {

@@ -1,4 +1,6 @@
-﻿namespace Housing.Services.Queries.Dto
+﻿using Housing.Services.Queries.Bills.Dto;
+
+namespace Housing.Services.Queries.Summary.Dto
 {
     public class SummaryDto
     {

@@ -1,8 +1,8 @@
 ﻿using Housing.Data.Helpers;
-using Housing.Services.Queries.Enums;
+using Housing.Services.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace Housing.Services.Queries.Dto
+namespace Housing.Services.Queries.Bills.Dto
 {
     public class RequestDto
     {

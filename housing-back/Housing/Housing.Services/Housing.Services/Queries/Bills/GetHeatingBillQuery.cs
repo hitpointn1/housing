@@ -1,9 +1,9 @@
 ﻿using Housing.Data.Entities;
-using Housing.Services.Queries.Dto;
-using Housing.Services.Queries.Enums;
+using Housing.Services.Enums;
+using Housing.Services.Queries.Bills.Dto;
 using MediatR;
 
-namespace Housing.Services.Queries
+namespace Housing.Services.Queries.Bills
 {
     public class GetHeatingBillQuery : RequestDto, IRequest<PaymentDto>
     {
