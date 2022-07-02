@@ -7,9 +7,9 @@ namespace Housing.Web.Controllers
     [Route("api/[controller]")]
     public class BaseController : Controller
     {
-        protected readonly IMediator _mediator;
+        protected readonly ISender _mediator;
 
-        protected BaseController(IMediator mediator)
+        protected BaseController(ISender mediator)
         {
             _mediator = mediator;
         }

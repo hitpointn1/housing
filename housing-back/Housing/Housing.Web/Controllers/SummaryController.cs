@@ -8,7 +8,7 @@ namespace Housing.Web.Controllers
 {
     public class SummaryController : BaseController
     {
-        public SummaryController(IMediator mediator)
+        public SummaryController(ISender mediator)
             : base(mediator) { }
 
         [HttpGet("{year:int}/{month:int}")]
