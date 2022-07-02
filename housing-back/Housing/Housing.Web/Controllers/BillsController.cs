@@ -8,7 +8,7 @@ namespace Housing.Web.Controllers
 {
     public class BillsController : BaseController
     {
-        public BillsController(IMediator mediator) : base(mediator)
+        public BillsController(ISender mediator) : base(mediator)
         {
         }
 
