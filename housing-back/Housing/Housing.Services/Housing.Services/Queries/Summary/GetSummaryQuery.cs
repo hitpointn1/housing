@@ -5,7 +5,7 @@ using Housing.Services.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Housing.Services.Queries.Bills
+namespace Housing.Services.Queries.Summary
 {
     public class GetSummaryQuery : RequestDto, IRequest<SummaryDto>
     {
