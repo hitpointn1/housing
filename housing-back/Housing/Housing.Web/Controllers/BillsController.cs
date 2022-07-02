@@ -12,38 +12,38 @@ namespace Housing.Web.Controllers
         {
         }
 
-        [HttpGet("water/{year}/{month}")]
-        public Task<WaterBillDto> GetWaterBill([FromRoute] string year, [FromRoute] string month, [FromQuery] ReportType? type)
+        [HttpGet("water/{year:int}/{month:int}")]
+        public Task<WaterBillDto> GetWaterBill([FromRoute] int year, [FromRoute] int month, [FromQuery] ReportType? type)
         {
             return _mediator.Send(new GetWaterBillQuery(year, month, type));
         }
 
-        [HttpGet("rent/{year}/{month}")]
-        public Task<PaymentDto> GetRent([FromRoute] string year, [FromRoute] string month, [FromQuery] ReportType? type)
+        [HttpGet("rent/{year:int}/{month:int}")]
+        public Task<PaymentDto> GetRent([FromRoute] int year, [FromRoute] int month, [FromQuery] ReportType? type)
         {
             return _mediator.Send(new GetRentQuery(year, month, type));
         }
 
-        [HttpGet("heating/{year}/{month}")]
-        public Task<PaymentDto> GetHeating([FromRoute] string year, [FromRoute] string month, [FromQuery] ReportType? type)
+        [HttpGet("heating/{year:int}/{month:int}")]
+        public Task<PaymentDto> GetHeating([FromRoute] int year, [FromRoute] int month, [FromQuery] ReportType? type)
         {
             return _mediator.Send(new GetHeatingBillQuery(year, month, type));
         }
 
-        [HttpGet("repairs/{year}/{month}")]
-        public Task<PaymentDto> GetRepairs([FromRoute] string year, [FromRoute] string month, [FromQuery] ReportType? type)
+        [HttpGet("repairs/{year:int}/{month:int}")]
+        public Task<PaymentDto> GetRepairs([FromRoute] int year, [FromRoute] int month, [FromQuery] ReportType? type)
         {
             return _mediator.Send(new GetRepairsBillQuery(year, month, type));
         }
 
-        [HttpGet("electricity/{year}/{month}")]
-        public Task<ElectricityBillDto> GetElectricity([FromRoute] string year, [FromRoute] string month, [FromQuery] ReportType? type)
+        [HttpGet("electricity/{year:int}/{month:int}")]
+        public Task<ElectricityBillDto> GetElectricity([FromRoute] int year, [FromRoute] int month, [FromQuery] ReportType? type)
         {
             return _mediator.Send(new GetElectricityBillQuery(year, month, type));
         }
 
-        [HttpGet("additional/{year}/{month}")]
-        public Task<AdditionalsBillDto> GetAdditonal([FromRoute] string year, [FromRoute] string month, [FromQuery] ReportType? type)
+        [HttpGet("additional/{year:int}/{month:int}")]
+        public Task<AdditionalsBillDto> GetAdditonal([FromRoute] int year, [FromRoute] int month, [FromQuery] ReportType? type)
         {
             return _mediator.Send(new GetAdditionalBillsQuery(year, month, type));
         }

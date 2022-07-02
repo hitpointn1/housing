@@ -5,6 +5,11 @@ namespace Housing.Data.Helpers
 {
     public static class BillingQueryExtensions
     {
+        public static IQueryable<Billing> WhereInRange(this IQueryable<Billing> query, DateOnly? start, DateOnly? end)
+        {
+            return query.WhereIf(start.HasValue && end.HasValue, v => v.Date >= start!.Value && v.Date <= end!.Value);
+        }
+
         public static IQueryable<T> WhereInRange<T>(this IQueryable<T> query, DateOnly? start, DateOnly? end)
             where T : BaseBillingItem
         {

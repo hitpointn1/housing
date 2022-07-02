@@ -11,8 +11,8 @@ namespace Housing.Web.Controllers
         public SummaryController(IMediator mediator)
             : base(mediator) { }
 
-        [HttpGet("{year}/{month}")]
-        public Task<SummaryDto> Get([FromRoute] string year, [FromRoute] string month, [FromQuery] ReportType? type)
+        [HttpGet("{year:int}/{month:int}")]
+        public Task<SummaryDto> Get([FromRoute] int year, [FromRoute] int month, [FromQuery] ReportType? type)
         {
             return _mediator.Send(new GetSummaryQuery(year, month, type));
         }

@@ -1,7 +1,6 @@
 ﻿using Housing.Data;
 using Housing.Data.Entities;
 using Housing.Data.Helpers;
-using Housing.Services.Helpers;
 using Housing.Services.Queries.Dto;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,11 +26,13 @@ namespace Housing.Services.Queries
                 .Aggregate(request.PreviousDate, request.PreviousEndDate)
                 .SingleOrDefaultAsync(cancellationToken);
 
-            var paymentDiff = MathHelper.Diff(current.Payment, previous.Payment);
-
             return new PaymentDto
             {
-                Payment = new ValueDto(current.Payment, paymentDiff, current.PaymentAVG),
+                Payment = new ValueDto(
+                    current.Payment,
+                    current.Payment.Diff(previous.Payment),
+                    current.PaymentAVG
+                )
             };
         }
     }

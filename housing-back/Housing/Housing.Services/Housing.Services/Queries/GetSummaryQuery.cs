@@ -8,7 +8,7 @@ namespace Housing.Services.Queries
 {
     public class GetSummaryQuery : RequestDto, IRequest<SummaryDto>
     {
-        public GetSummaryQuery(string year, string month, ReportType? type)
+        public GetSummaryQuery(int year, int month, ReportType? type)
             : base(year, month, type) { }
 
         private class GetSummaryHandler : IRequestHandler<GetSummaryQuery, SummaryDto>

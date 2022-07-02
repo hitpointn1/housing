@@ -6,13 +6,10 @@ namespace Housing.Services.Queries.Dto
 {
     public class RequestDto
     {
-        public RequestDto(string year, string month, ReportType? type)
+        public RequestDto(int year, int month, ReportType? type)
         {
-            var yearParsed = int.Parse(year);
-            var monthParsed = int.Parse(month);
-
             Type = type ?? ReportType.Monthly;
-            Date = Get(yearParsed, monthParsed, Type);
+            Date = Get(year, month, Type);
             EndDate = GetEnd(Date, Type);
 
             if (Date.HasValue)
@@ -23,12 +20,12 @@ namespace Housing.Services.Queries.Dto
         }
 
         [EnumDataType(typeof(ReportType))]
-        private ReportType Type { get; set; }
+        private ReportType Type { get; }
 
-        public DateOnly? Date { get; set; }
-        public DateOnly? EndDate { get; set; }
-        public DateOnly? PreviousDate { get; set; }
-        public DateOnly? PreviousEndDate { get; set; }
+        public DateOnly? Date { get; }
+        public DateOnly? EndDate { get; }
+        public DateOnly? PreviousDate { get; }
+        public DateOnly? PreviousEndDate { get; }
 
         private static DateOnly? Get(int year, int month, ReportType type)
         {

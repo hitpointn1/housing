@@ -6,8 +6,8 @@ namespace Housing.Tests
 {
     public class DateHelpersTests
     {
-        [TestCase("2022", "3")]
-        public void Month(string year, string month)
+        [TestCase(2022, 3)]
+        public void Month(int year, int month)
         {
             var date = new RequestDto(year, month, ReportType.Monthly).Date.GetValueOrDefault();
 
@@ -16,8 +16,8 @@ namespace Housing.Tests
             Assert.AreEqual(2022, date.Year);
         }
 
-        [TestCase("2022", "2")]
-        public void Month_WithoutTypeSpecified(string year, string month)
+        [TestCase(2022, 2)]
+        public void Month_WithoutTypeSpecified(int year, int month)
         {
             var date = new RequestDto(year, month, null).Date.GetValueOrDefault();
 
@@ -26,19 +26,19 @@ namespace Housing.Tests
             Assert.AreEqual(2022, date.Year);
         }
 
-        [TestCase("2022", "1", 1)]
-        [TestCase("2022", "2", 1)]
-        [TestCase("2022", "3", 1)]
-        [TestCase("2022", "4", 4)]
-        [TestCase("2022", "5", 4)]
-        [TestCase("2022", "6", 4)]
-        [TestCase("2022", "7", 7)]
-        [TestCase("2022", "8", 7)]
-        [TestCase("2022", "9", 7)]
-        [TestCase("2022", "10", 10)]
-        [TestCase("2022", "11", 10)]
-        [TestCase("2022", "12", 10)]
-        public void Quarter(string year, string month, int expectedMonth)
+        [TestCase(2022, 1, 1)]
+        [TestCase(2022, 2, 1)]
+        [TestCase(2022, 3, 1)]
+        [TestCase(2022, 4, 4)]
+        [TestCase(2022, 5, 4)]
+        [TestCase(2022, 6, 4)]
+        [TestCase(2022, 7, 7)]
+        [TestCase(2022, 8, 7)]
+        [TestCase(2022, 9, 7)]
+        [TestCase(2022, 10, 10)]
+        [TestCase(2022, 11, 10)]
+        [TestCase(2022, 12, 10)]
+        public void Quarter(int year, int month, int expectedMonth)
         {
             var date = new RequestDto(year, month, ReportType.Quaterly).Date.GetValueOrDefault();
 

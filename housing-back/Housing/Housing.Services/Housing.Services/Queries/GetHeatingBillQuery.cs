@@ -7,7 +7,7 @@ namespace Housing.Services.Queries
 {
     public class GetHeatingBillQuery : RequestDto, IRequest<PaymentDto>
     {
-        public GetHeatingBillQuery(string year, string month, ReportType? type)
+        public GetHeatingBillQuery(int year, int month, ReportType? type)
             : base(year, month, type) { }
 
         private class GetHeatingBillHandler : IRequestHandler<GetHeatingBillQuery, PaymentDto>

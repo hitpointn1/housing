@@ -1,7 +1,6 @@
 ﻿using Housing.Data;
 using Housing.Data.Entities;
 using Housing.Data.Helpers;
-using Housing.Services.Helpers;
 using Housing.Services.Queries.Dto;
 using Housing.Services.Queries.Enums;
 using MediatR;
@@ -11,7 +10,7 @@ namespace Housing.Services.Queries
 {
     public class GetElectricityBillQuery : RequestDto, IRequest<ElectricityBillDto>
     {
-        public GetElectricityBillQuery(string year, string month, ReportType? type)
+        public GetElectricityBillQuery(int year, int month, ReportType? type)
             : base(year, month, type) { }
 
         private class GetElectricityBillHandler : IRequestHandler<GetElectricityBillQuery, ElectricityBillDto>
@@ -33,14 +32,18 @@ namespace Housing.Services.Queries
                     .Aggregate(request.PreviousDate, request.PreviousEndDate)
                     .SingleOrDefaultAsync(cancellationToken);
 
-                var paymentDiff = MathHelper.Diff(current.Payment, previous.Payment);
-                var consumptionDiff = MathHelper.Diff(current.ConsumptionReadings, previous.ConsumptionReadings);
-                var consumptionPrediction = MathHelper.Prediction(current.ConsumptionReadings, previous.ConsumptionReadingsMin, current.ConsumptionReadingsCount, previous.ConsumptionReadingsCount);
-
                 return new ElectricityBillDto
                 {
-                    Payment = new ValueDto(current.Payment, paymentDiff, current.PaymentAVG),
-                    ConsumptionReadings = new ValueDto(current.ConsumptionReadings, consumptionDiff, consumptionPrediction)
+                    Payment = new ValueDto(
+                        current.Payment,
+                        current.Payment.Diff(previous.Payment),
+                        current.PaymentAVG
+                    ),
+                    ConsumptionReadings = new ValueDto(
+                        current.ConsumptionReadings,
+                        current.ConsumptionReadings.Diff(previous.ConsumptionReadings),
+                        current.ConsumptionPrediction(previous)
+                    )
                 };
             }
         }

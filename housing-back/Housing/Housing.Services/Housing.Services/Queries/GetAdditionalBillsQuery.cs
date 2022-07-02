@@ -1,7 +1,6 @@
 ﻿using Housing.Data;
 using Housing.Data.Entities;
 using Housing.Data.Helpers;
-using Housing.Services.Helpers;
 using Housing.Services.Queries.Dto;
 using Housing.Services.Queries.Enums;
 using MediatR;
@@ -11,7 +10,7 @@ namespace Housing.Services.Queries
 {
     public class GetAdditionalBillsQuery : RequestDto, IRequest<AdditionalsBillDto>
     {
-        public GetAdditionalBillsQuery(string year, string month, ReportType? type)
+        public GetAdditionalBillsQuery(int year, int month, ReportType? type)
             : base(year, month, type) { }
 
         private class GetAdditionalBillsHandler : IRequestHandler<GetAdditionalBillsQuery, AdditionalsBillDto>
@@ -35,8 +34,16 @@ namespace Housing.Services.Queries
 
                 return new AdditionalsBillDto
                 {
-                    Internet = new ValueDto(rangeGroup.Internet, MathHelper.Diff(rangeGroup.Internet, previousGroup.Internet), rangeGroup.InternetAVG),
-                    Payment = new ValueDto(rangeGroup.Payment, MathHelper.Diff(rangeGroup.Payment, previousGroup.Payment), rangeGroup.PaymentAVG),
+                    Internet = new ValueDto(
+                        rangeGroup.Internet,
+                        rangeGroup.Internet.Diff(previousGroup.Internet),
+                        rangeGroup.InternetAVG
+                    ),
+                    Payment = new ValueDto(
+                        rangeGroup.Payment,
+                        rangeGroup.Payment.Diff(previousGroup.Payment),
+                        rangeGroup.PaymentAVG
+                    )
                 };
             }
         }
